@@ -19,13 +19,31 @@ const fetchApi = fetch("./dados.txt")
   dados.forEach((item) => {
     jogo = item.split(":")
     jogadorA = jogo[0];
-    jogadorB = jogo[1];
-    if (jogadorB === "scissors") {
-      pontuacao += scissorsAgainst(jogadorA)
-    } else if (jogadorB === "rock") {
-      pontuacao += rockAgainst(jogadorA)
+    situacao = jogo[1];
+    if (situacao === "scissors") {
+      if (jogadorA === "scissors") {
+        pontuacao += rockAgainst(jogadorA);
+      } else if (jogadorA === "rock") {
+        pontuacao += paperAgainst(jogadorA)
+      } else {
+        pontuacao += scissorsAgainst(jogadorA)
+      }
+    } else if (situacao === "rock") {
+      if (jogadorA === "scissors") {
+        pontuacao += paperAgainst(jogadorA);
+      } else if (jogadorA === "rock") {
+        pontuacao += scissorsAgainst(jogadorA);
+      } else {
+        pontuacao += rockAgainst(jogadorA)
+      }
     } else {
-      pontuacao += paperAgainst(jogadorA)
+      if (jogadorA === "scissors") {
+        pontuacao += scissorsAgainst(jogadorA)
+      } else if (jogadorA === "rock") {
+        pontuacao += rockAgainst(jogadorA)
+      } else {
+        pontuacao += paperAgainst(jogadorA)
+      }
     }
   }
   )
@@ -34,6 +52,7 @@ const fetchApi = fetch("./dados.txt")
 
 // A = PEDRA, B = PAPER, C = TESOURA
 // X = PEDRA, Y = PAPER, C = TESOURA
+// ROCK = PERDER, PAPER = EMPATAR, TESOURA = GANHAR
 
 function scissorsAgainst(option) {
   if (option === "rock") {
