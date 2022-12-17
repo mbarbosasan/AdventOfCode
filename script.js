@@ -16,7 +16,7 @@ const fetchApi = fetch("./dados.txt")
   .replaceAll("Y", "paper")
   .replaceAll("Z", "scissors")
   .split(",")
-  dados.map((item) => {
+  dados.forEach((item) => {
     jogo = item.split(":")
     jogadorA = jogo[0];
     jogadorB = jogo[1];
