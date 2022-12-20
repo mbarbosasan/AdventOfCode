@@ -9,15 +9,23 @@ let sum = 0
 const fetchApi = fetch("./dados.txt")
 .then((response) => response.text())
 .then((json) => {
+  count = 0
   dados = JSON.stringify(json).replaceAll('"', "").replaceAll("\\r\\n", ",").split(",")
-  dados.forEach((sacola) => {
-    let firstHalf = Array.from(sacola).slice().splice(0, Math.ceil(sacola.length / 2))
-    let lastHalf = Array.from(sacola).slice().splice(-Math.ceil(sacola.length / 2))
-    let sameValueInArray = firstHalf.filter((item) => lastHalf.includes(item));
-    sum += numberPriority.findIndex((item) => sameValueInArray.includes(item))
-    sum++
-    })
-    console.log(sum)
+  arrayAgrouppedElves = []
+  let group = []
+  dados.forEach((item) => {
+    if (count < 3) {
+      group.push(item)
+    }
+    count++
+    if (count == 3) {
+      sum += numberPriority.findIndex(letra => group[0].includes(letra) && group[1].includes(letra) && group[2].includes(letra))
+      sum++
+      count = 0;
+      group = []
+    }
+  })
+  console.log("Total: " + sum )
 })
 
 
